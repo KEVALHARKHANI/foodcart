@@ -1,0 +1,42 @@
+{%extends 'main.html'%}
+{%block content%}
+<div style="padding:10px;padding-right:20%;padding-left:20%;">
+
+        <table width="100%">
+            {%for i in data%}
+            <tr style="background:white;padding-top:10px">
+
+                <td width="75%" >
+                    <b>{{i.name}}</b></br>
+                    {{i.house}}<br>
+                    {{i.location}},{{i.city}}-{{i.pincode}}<br>
+                    {{i.phone}}
+                </td>
+                <td width="25%">
+                    {%if '/cart/' in request.path%}
+                    <a href="select_address?id={{i.id}}"><button>select</button></a>
+                    {% endif%}
+                </td>
+                <td width="25%">
+                    <a href="/myaccount/delete_address/{{i.id}}"><button>Remove</button></a>
+                </td>
+
+
+                 <td width="25%">
+                    <a href="/myaccount/address/edit_address/{{i.id}}"><button>edit</button></a>
+                </td>
+
+
+
+            </tr>
+            <tr> <td>   </td></tr>
+            {%endfor%}
+
+        </table>
+{% if 'edit' not in request.path%}
+    add <a href="new_address"><u>new address</u></a>
+{% endif%}
+
+
+    </div>
+{% endblock%}

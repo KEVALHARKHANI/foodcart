@@ -1,0 +1,16 @@
+{%extends 'main.html'%}
+{% block content%}
+<div style="padding:10px;padding-right:20%;padding-left:20%;">
+    <div style="background:white">
+        {%for i in user_data%}
+            name:<input type="text" value="{{i.name}}" readonly></br>
+            email:<input type="text" value="{{i.email}}" readonly><br>
+
+
+
+        {%endfor%}
+    </div>
+
+</div>
+
+{%endblock%}

@@ -1,0 +1,63 @@
+{%extends 'main.html'%}
+
+{%block content%}
+<script>
+     function get_area_name()
+{      var id=document.getElementById("code").value;
+        if (id==""){
+
+        }else{
+
+			xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+                        if(this.responseText=="no"){
+                        document.getElementById('code').value="";
+                        alert('invalid code')
+                        }else{
+					document.getElementById('area').value=this.responseText;
+					}
+
+				}
+			};
+			xhttp.open("GET", "/cart/zipcode?code="+id, true);
+			xhttp.send();
+
+		}}
+</script>
+{% if adata%}
+{% for i in adata%}
+<center>
+<h3> add address</h3>
+    <form action="/myaccount/edit_add_address?id={{i.id}}" method="post">
+        {%csrf_token%}
+        <input type="text" name="name" placeholder="Name" value="{{i.name}}"></br>
+        <input type="text" placeholder="phone" name="phone" value="{{i.phone}}"></br>
+        <input type="text" id="code" placeholder="pincode" onblur="get_area_name()" name="pincode" value="{{i.pincode}}"></br>
+        <input type="text" placeholder="address" name="address" value="{{i.house}}"></br>
+        <input type="text" placeholder="ahemdabad" disabled></br>
+        <input type="text" placeholder="landmark" name="landmark" value="{{i.location}}"></br>
+        <input type="text" id="area" placeholder="area" name="area" value="{{area}}" readonly></br>
+
+        <button type="submit">update</button>
+    </form>
+</center>
+{%endfor%}
+{%else%}
+<center>
+<h3> add address</h3>
+    <form action="add_address" method="post">
+        {%csrf_token%}
+        <input type="text" name="name" placeholder="Name"></br>
+        <input type="text" placeholder="phone" name="phone"></br>
+        <input type="text" id="code" placeholder="pincode" onblur="get_area_name()" name="pincode"></br>
+        <input type="text" placeholder="address" name="address"></br>
+        <input type="text" placeholder="ahemdabad" disabled></br>
+        <input type="text" placeholder="landmark" name="landmark"></br>
+        <input type="text" id="area" placeholder="area" name="area" readonly></br>
+
+        <button type="submit">add</button>
+    </form>
+</center>
+{%endif%}
+{%endblock%}

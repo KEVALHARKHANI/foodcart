@@ -1,0 +1,46 @@
+{% extends 'main.html'%}
+{% block content%}
+
+<script>
+    function add_to_cart(id)
+{
+
+			xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+
+					alert(this.responseText);
+				}
+			};
+			xhttp.open("GET", "/cart/add?id=" +id, true);
+			xhttp.send();
+
+		}
+function show() {
+var x = document.getElementById("alt1");
+
+   x.style.display = "none"
+
+
+}
+
+</script>
+
+{% for f in food%}
+<!--<h3 style="padding-bottom">{{f.foodname}}</h3>-->
+<div style="padding:10px;padding-right:20%;padding-left:20%;">
+    <div style="background:white">
+        <table width="100%">
+            <tr>
+
+                <td width="33%"><img src="{{f.image}}"  height="42px" width="42px"> {{f.foodname}}</td>
+
+                <td width="33%" align="center">{{f.price}}$</td>
+        <!--<span style="font-size:12px">{{r.detail}}</span>-->
+        <td width="33%" align="right"><button onclick="add_to_cart({{f.id}})">add</button></td>
+            </tr>
+        </table>
+    </div>
+</div>
+{%endfor%}
+{%endblock%}

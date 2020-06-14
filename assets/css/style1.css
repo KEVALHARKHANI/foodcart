@@ -1,0 +1,19 @@
+.button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 4px 32px;
+    text-align: left;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+.search{font: 15px/24px "Lato", Arial, sans-serif; color: #333; width: 25%; box-sizing: border-box; letter-spacing: 1px;}
+
+button:hover {
+    background-color: red;
+}

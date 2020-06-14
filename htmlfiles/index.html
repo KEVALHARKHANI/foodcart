@@ -1,0 +1,72 @@
+{% extends 'main.html'%}
+{% block content%}
+<!-- alert box-->
+
+<!--------------------------->
+<div style="padding:70px" >
+                <center>
+
+                    <form action="search/" method="post">
+                        {%csrf_token%}
+                        <input class="search" type="text" name="q" placeholder="find a resturant"><br>
+                        <input class="button" type="submit" value="search">
+                    </form>
+                </center>
+</div>
+{% for r in rest%}
+<a href="/food/{{r.id}}">
+<div style="padding:10px">
+    <div style="background:white">
+        <table>
+            <tr>
+    <td align="left"><img src="{{r.image}}"  height="42px" width="42px"></td>
+                <td style="padding-left:10px"><span style="font-size:20px;padding-right:70%">{{r.restroname}}</span>
+                </br>
+                    <span style="font-size:12px">{{r.address}}</span>
+                </td>
+         <td align="right" >
+        {%if r.specialoffer%}
+        <span style="background:red;"> {{r.offer}}% off</span>
+        {%endif%}
+         </td>
+
+
+            </tr>
+            </table>
+    </div>
+    </div>
+</a>
+
+{% endfor %}
+
+<!--------------------------------------------most viewed---------------------------------------->
+{%if most_viewed%}
+<h3>Most viewed</h3>
+{% for r in most_viewed%}
+<a href="/food/{{r.object_id.id}}">
+<div style="padding:10px">
+    <div style="background:white">
+        <table>
+            <tr>
+    <td align="left"><img src="{{r.object_id.image}}"  height="42px" width="42px"></td>
+                <td style="padding-left:10px"><span style="font-size:20px;padding-right:70%">{{r.object_id.restroname}}</span>
+                </br>
+                    <span style="font-size:12px">{{r.object_id.address}}</span>
+                </td>
+         <td align="right" >
+        {%if r.object_id.specialoffer%}
+        <span style="background:red;"> {{r.object_id.offer}}% off</span>
+        {%endif%}
+         </td>
+
+
+            </tr>
+            </table>
+    </div>
+    </div>
+</a>
+
+{% endfor %}
+{%endif%}
+
+{% endblock %}

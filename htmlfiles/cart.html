@@ -1,0 +1,83 @@
+{%extends 'main.html'%}
+{%load calculate%}
+{% block content %}
+<script>
+    function fdelete(id)
+        {
+
+			xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+
+					alert(this.responseText);
+				}
+			};
+			xhttp.open("GET", "/delete?fid="+id, true);
+			xhttp.send();
+
+		}
+
+
+
+</script>
+{%if message%}
+<center><h3>{{message}}</h3></center>
+
+{% else %}
+
+{% for f in cdata%}
+<!--<h3 style="padding-bottom">{{f.foodname}}</h3>-->
+<div style="padding:10px;padding-right:20%;padding-left:20%;">
+
+    <div style="background:white">
+        <table width="100%">
+            <tr>
+
+                <td width="25%"><img src="{{f.foodname.image}}"  height="42px" width="42px"> {{f.foodname}}</td>
+
+                <td width="25%" align="center">{{f.quantity}}
+                    <a href="cadd?fid={{f.foodname_id}}"><button>+</button></a>
+                    <a href="delete?fid={{f.foodname_id}}"> <button >-</button></a></td>
+        <!--<span style="font-size:12px">{{r.detail}}</span>-->
+        <td width="25%" align="right">{%multiply f.quantity f.foodname.price%}</td>
+                <td width="25%" align="right"><a href="remove?fid={{f.foodname_id}}">remove</a> </td>
+            </tr>
+        </table>
+
+    </div>
+</div>
+{%endfor%}
+<div style="padding:10px;padding-right:20%;padding-left:20%;">
+<div style="background:white" >
+    <table width="100%">
+        <tr>
+            <td align="right">
+            food={{request.session.food}}
+            </td>
+        </tr>
+        <tr>
+            <td align="right">
+            charge=50.00
+            </td>
+        </tr>
+        <tr>
+            <td align="right">
+            discount={{request.session.discount}}
+            </td>
+        </tr>
+        <tr>
+            <td align="right">
+            total={{request.session.total}}
+            </td>
+        </tr>
+        <tr>
+            <td align="right">
+                <a href="procced"><button> procced </button></a>
+            </td>
+        </tr>
+    </table>
+</div>
+</div>
+{%endif%}
+
+{% endblock%}

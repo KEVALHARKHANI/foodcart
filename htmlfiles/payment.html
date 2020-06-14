@@ -1,0 +1,132 @@
+{% extends 'main.html'%}
+{% block content%}
+{%load calculate%}
+<script>
+function upi()
+{
+    var id=document.getElementById('id').value;
+    alert(id);
+
+}
+function card()
+{
+var button=document.getElementsByName("payment");
+
+        for(var i=0;i<button.length;i++){
+    try
+    {
+
+        var id=button[i].value;
+
+
+            if(button[i].checked)
+                {
+                    if(button[i].value=="netbanking")
+                    {
+                        document.getElementById("select_list").disabled=false;
+                    }
+                    document.getElementById("cvv"+id).hidden=false;
+                    document.getElementById("cvv"+id).disabled=false;
+                }
+              else
+              {
+                  document.getElementById("cvv"+id).hidden=true;
+                  document.getElementById("cvv"+id).disabled=true;
+                  document.getElementById("select_list").disabled=true;
+
+              }
+
+     }
+    catch(err)
+     {
+
+     }
+}
+
+}
+    function cnumber()
+    {
+        var number=document.getElementById("cnum").value;
+        var len=0
+        for(var i=0;i==number.length%4;i++){
+            len=number.replace('-','');
+            }
+        if (len.length%4==0)
+        {
+            document.getElementById("cnum").value=number+"-";
+        }
+    }
+    function add_to_card()
+    {
+        var name=document.getElementById("name").value
+        var card_number=document.getElementById("cnum").value
+        var date=document.getElementById("date").value
+
+        xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+				location.reload()
+
+				}
+			};
+			xhttp.open("GET", "/cart/add_to_card?name="+name+"&number="+card_number+"&date="+date, true);
+			xhttp.send();
+
+    }
+</script>
+<!----------------- card ------------------>
+<form action="payment_method" method="post">
+    {% csrf_token%}
+<div style="padding:10px">
+    <div style="background:white">
+        Add card:
+        <div style="padding-left:20px">
+        <input type="text" placeholder="holder name" id="name"><br>
+        <input type="text" placeholder="enter card number" id="cnum"><br>
+        <input type="text" placeholder="expiry date" id="date">
+        <input type="text" placeholder="cvv"><br>
+        <button onclick="add_to_card()" type="button">add</button>
+            </div>
+        {%for i in card_data%}
+        <div style="padding-left:10px"><input type="radio" name="payment" id="button{{i.id}}" value="card&{{i.id}}" onclick="card()"> {{i.name}}  {{i.card_number}} {% date i.expiry_date%}</div>
+        <div id="cvv-div"  ></div>
+        <input type="text" id="cvv{{i.id}}" placeholder="cvv" style="padding-left:20px" hidden disabled>
+        {%endfor%}
+    </div>
+</div>
+<!-----------------net banking----------->
+<div style="padding:10px;">
+    <div style="background:white;">
+        <input type="radio"  name="payment" value="netbanking" onclick="card()"> Netbanking:
+        <div style="padding-left:30px" >
+        <select name="bank"  id="select_list" disabled >
+            <option value="sbi">State bank of india</option>
+  <option value="hdfc" >HDFC</option>
+  <option value="icic" >ICIC</option>
+  <option value="bob" >bank of baroda</option>
+        </select>
+            </div>
+
+    </div>
+</div>
+
+<!-----------------upi----------->
+<div style="padding:10px">
+    <div style="background:white">
+        <input type="radio"  name="payment" value="upi" onclick="card()"> UPI:
+        <div style="padding-left:30px" >
+            <input type="text" name="id" id="id" placeholder="enter Upi ID" ><button type="button" onclick="upi()">verify</button>
+            </div>
+
+    </div>
+</div>
+<!------------------------Cash on delivery-------------------------->
+<div style="padding:10px">
+    <div style="background:white">
+       <input type="radio"  name="payment" value="cod" onclick="card()" checked> Cash on delivery
+
+    </div>
+</div>
+    <center><button type="submit">payment</button>
+    </form>
+{% endblock%}

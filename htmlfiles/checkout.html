@@ -1,0 +1,92 @@
+{%extends 'main.html'%}
+{%load calculate%}
+{%block content%}
+<div style="padding:10px;padding-right:20%;padding-left:20%;">
+<b>Address:</b>
+        <table width="100%">
+            {%for i in adata%}
+            <tr style="background:white;padding-top:10px">
+
+                <td width="75%" >
+                    <b>{{i.name}}</b></br>
+                    {{i.house}}<br>
+                    {{i.location}},{{i.city}}-{{i.pincode}}<br>
+                    {{i.phone}}
+                </td>
+                <td width="25%">
+
+                    <a href="procced"><button>Edit</button></a>
+
+                </td>
+
+            </tr>
+            <tr> <td>   </td></tr>
+            {%endfor%}
+        </table>
+
+    </div>
+
+<!---------------------------------------------display foods------------------------------------------------->
+<div  style="padding:10px;padding-right:20%;padding-left:20%;">
+
+    <table width="100%">
+        <tr>
+            <td width="90%">
+            <b>Cart:</b>        </td>
+<td width="10%"><a href="/cart" align="right"><button>Edit</button></a></td>
+        </tr>
+        </table>
+    <div style='width:100%;height:200px;overflow:auto;'>
+{%for f in cdata%}
+    <div style="background:white;padding-top:20px" >
+        <table width="100%">
+            <tr>
+
+                <td width="25%"><img src="{{f.foodname.image}}"  height="42px" width="42px"> {{f.foodname}}</td>
+
+                <td width="25%" align="center">{{f.quantity}}
+        <!--<span style="font-size:12px">{{r.detail}}</span>-->
+        <td width="25%" align="right">{%multiply f.quantity f.foodname.price%}</td>
+            </tr>
+        </table>
+
+    </div>
+    {%endfor%}
+        </div>
+</div>
+
+<!-----------------clear amount------------------------->
+<div style="padding:10px;padding-right:20%;padding-left:20%;">
+    <b>Amount:</b>
+<div style="background:white" >
+    <table width="100%">
+        <tr>
+            <td align="right">
+            food={{request.session.food}}
+            </td>
+        </tr>
+        <tr>
+            <td align="right">
+            charge=50.00
+            </td>
+        </tr>
+        <tr>
+            <td align="right">
+            discount={{request.session.discount}}
+            </td>
+        </tr>
+        <tr>
+            <td align="right">
+            total={{request.session.total}}
+            </td>
+        </tr>
+        <tr>
+            <td align="right">
+                <a href="payment"><button> checkout </button></a>
+            </td>
+        </tr>
+    </table>
+</div>
+</div>
+
+{% endblock%}

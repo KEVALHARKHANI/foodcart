@@ -1,0 +1,24 @@
+{% extends 'main.html'%}
+{% block content%}
+<center><h3>{{error}}</h3></center>
+{% for o,j in order_data%}
+<div style="padding:10px;padding-right:20%;padding-left:20%;">
+    <div style=" background:white">
+
+        <table>
+            <tr>
+                <td rowspan="2" height="60px" width="25%"><img src="{{o.restroid.image}}"  height="60px" width="60px"></td>
+                <td width="25%" height="60px"><b>{{o.restroid.restroname}}</b></td>
+                <td rowspan="2" height="60px" width="25%">${{o.total}}</td>
+                <td rowspan="2" height="60px" width="25%">{{o.date}}</td>
+            </tr>
+            <tr>
+
+                <td width="25%"  >{%for f in j%}{{f.foodname}},{%endfor%}</td>
+
+            </tr>
+</table>
+    </div>
+    </div>
+{% endfor%}
+{%endblock%}

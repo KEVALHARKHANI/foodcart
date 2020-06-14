@@ -1,0 +1,16 @@
+{% extends 'main.html'%}
+{% block content%}
+<center>
+<div style="background:white">
+    <form action="add_new_card" method="post">
+        {%csrf_token%}
+        <input type="text" placeholder="holder name" name="name"><br>
+        <input type="text" placeholder="enter card number" name="number"><br>
+        <input type="text" placeholder="expiry date" name="date"><br>
+        <input type="text" placeholder="cvv"><br>
+        <button  type="submit">add</button>
+
+    </form>
+    </div>
+</center>
+{%endblock%}

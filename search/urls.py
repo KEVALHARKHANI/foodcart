@@ -17,7 +17,7 @@ from . import views
 from django.urls import path
 
 urlpatterns = [
-    #path('',views.Search_bar.as_view(),name="search"),
-    path('',views.search_bar,name="search"),
+    path('',views.Search_bar.as_view(),name="search"),
+  
 
 ]
